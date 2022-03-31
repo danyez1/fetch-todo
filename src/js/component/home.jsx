@@ -5,7 +5,7 @@ import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 export const Home = () => {
-	const [taskname, setTaskname] = useState("");
+	const [taskName, setTaskname] = useState("");
 	const [todoList, setTodolist] = useState([]);
 	return (
 		<>
@@ -15,13 +15,17 @@ export const Home = () => {
 					type="text"
 					placeholder="add task"
 					onChange={(e) => {
+						if (taskName !== "" && e.key == "Enter") {
+							setTodolist([...todoList, taskName]);
+							setTaskname("");
+						}
 						setTaskname(e.target.value);
 					}}
-					value={taskname}
+					value={taskName}
 				/>
 				<button
 					onClick={() => {
-						setTodolist([...todoList, taskname]);
+						setTodolist([...todoList, taskName]);
 						setTaskname("");
 					}}>
 					Add Todo
@@ -33,10 +37,10 @@ export const Home = () => {
 								<p>{todo}</p>
 								<button
 									onClick={() => {
-										setTodolist(() =>
-											todoList.filter((item) => {
-												item !== todo;
-											})
+										setTodolist(
+											todoList.filter(
+												(item) => item !== todo
+											)
 										);
 									}}>
 									Delete
