@@ -14,7 +14,7 @@ export const Home = () => {
 					Todo-list
 				</div>
 
-				<div class="input-group mb-3 ">
+				<div class="input-group mb-0 ms-0 d-flex mt-3  justify-content-center  ">
 					<input
 						aria-describedby="button-addon2"
 						className=" input- group mb-0 fs-3 text me-0"
