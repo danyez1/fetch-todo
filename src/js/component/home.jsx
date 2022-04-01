@@ -9,7 +9,7 @@ export const Home = () => {
 	const [todoList, setTodolist] = useState([]);
 	return (
 		<>
-			<div className="d-flex  flex-column w-25 p-5 mx-auto border border-5 mt-3">
+			<div className="d-flex rounded-3 flex-column w-25 p-5 mx-auto border border-5 mt-3">
 				<div className="card-header bg-info bg-gradient fs-1 text d-flex justify-content-center">
 					Todo-list
 				</div>
@@ -51,7 +51,7 @@ export const Home = () => {
 									onClick={() => {
 										setTodolist(
 											todoList.filter(
-												(item) => item !== todo
+												(item, i) => i !== index
 											)
 										);
 									}}>
@@ -63,6 +63,7 @@ export const Home = () => {
 				</ul>
 				<div className="bg-warning mt-5 w-25 p-3 rounded-pill bg-opacity-50 justify-content-center d-flex ">
 					{todoList.length}
+					<spam className="ms-3"> Item left</spam>
 				</div>
 			</div>
 		</>
