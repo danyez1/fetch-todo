@@ -9,9 +9,12 @@ export const Home = () => {
 	const [todoList, setTodolist] = useState([]);
 	return (
 		<>
-			<div>
-				<h1>Todo List</h1>
+			<div className="d-flex  flex-column w-25 p-5 mx-auto border border-5 mt-3">
+				<div className="card-header bg-info bg-gradient fs-1 text d-flex justify-content-center">
+					Todo-list
+				</div>
 				<input
+					className="fs-3 text mt-3"
 					type="text"
 					placeholder="add task"
 					onChange={(e) => {
@@ -24,18 +27,27 @@ export const Home = () => {
 					value={taskName}
 				/>
 				<button
+					type="button"
+					className=" btn btn-dark w-25 mt-3 text-white d-flex align-self-end "
 					onClick={() => {
 						setTodolist([...todoList, taskName]);
 						setTaskname("");
 					}}>
 					Add Todo
 				</button>
-				<ul>
+				<ul className="list-group mt-3">
 					{todoList.map((todo, index) => {
 						return (
-							<li key={index} className="d-flex flex row">
-								<p>{todo}</p>
+							<li
+								key={index}
+								className="list-group-item d-flex justify-content-around justify-content-center p-2  bg-light">
+								<p className="align-self-end text-dark fs-3">
+									{todo}
+								</p>
+
 								<button
+									type="button"
+									class="btn btn-dark"
 									onClick={() => {
 										setTodolist(
 											todoList.filter(
@@ -49,7 +61,9 @@ export const Home = () => {
 						);
 					})}
 				</ul>
-				<div>{todoList.length}</div>
+				<div className="bg-warning mt-5 w-25 p-3 rounded-pill bg-opacity-50 justify-content-center d-flex ">
+					{todoList.length}
+				</div>
 			</div>
 		</>
 	);
