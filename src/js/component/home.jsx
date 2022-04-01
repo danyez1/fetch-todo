@@ -13,35 +13,48 @@ export const Home = () => {
 				<div className="card-header bg-info bg-gradient fs-1 text d-flex justify-content-center">
 					Todo-list
 				</div>
-				<input
-					className="fs-3 text mt-3"
-					type="text"
-					placeholder="add task"
-					onChange={(e) => {
-						if (taskName !== "" && e.key == "Enter") {
-							setTodolist([...todoList, taskName]);
-							setTaskname("");
-						}
-						setTaskname(e.target.value);
-					}}
-					value={taskName}
-				/>
-				<button
-					type="button"
-					className=" btn btn-dark w-25 mt-3 text-white d-flex align-self-end "
-					onClick={() => {
-						setTodolist([...todoList, taskName]);
-						setTaskname("");
-					}}>
-					Add Todo
-				</button>
+
+				<div class="input-group mb-3 ">
+					<input
+						aria-describedby="button-addon2"
+						className=" input- group mb-0 fs-3 text me-0"
+						type="text"
+						placeholder="add task"
+						onChange={(e) => {
+							if (taskName !== "" && e.key == "Enter") {
+								setTodolist([...todoList, taskName]);
+								setTaskname("");
+							}
+							setTaskname(e.target.value);
+						}}
+						value={taskName}
+						onKeyUp={(e) => {
+							if (taskName !== "" && e.key == "Enter") {
+								setTodolist([...todoList, taskName]);
+								setTaskname("");
+							}
+						}}
+					/>
+					<button
+						id="button-addon2"
+						type="button"
+						className=" btn btn-outline-secondary  text-dark"
+						onClick={(e) => {
+							if (taskName !== "") {
+								setTodolist([...todoList, taskName]);
+								setTaskname("");
+							}
+						}}>
+						Add Todo
+					</button>
+				</div>
 				<ul className="list-group mt-3">
 					{todoList.map((todo, index) => {
 						return (
 							<li
 								key={index}
 								className="list-group-item d-flex justify-content-around justify-content-center p-2  bg-light">
-								<p className="align-self-end text-dark fs-3">
+								<p className="align-self-end text-dark fs-3 mb-0">
 									{todo}
 								</p>
 
