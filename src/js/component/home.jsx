@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
@@ -7,6 +7,69 @@ import rigoImage from "../../img/rigo-baby.jpg";
 export const Home = () => {
 	const [taskName, setTaskname] = useState("");
 	const [todoList, setTodolist] = useState([]);
+	useEffect(() => {
+		var requestOptions = {
+			method: "GET",
+			redirect: "follow",
+		};
+
+		fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/cruzdanielyanez",
+			requestOptions
+		)
+			.then((response) => response.json())
+			.then((result) => setTodolist(result))
+			.catch((error) => console.log("error", error));
+	}, []);
+
+	const addItem = (newItem) => {
+		const newList = [...todoList, { label: newItem, done: false }];
+
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify(newList);
+
+		var requestOptions = {
+			method: "PUT",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow",
+		};
+
+		fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/cruzdanielyanez",
+			requestOptions
+		)
+			.then((response) =>
+				response.status === 200 ? setTodolist(newList) : ""
+			) // es una condicion una forma de If
+			.catch((error) => console.log("error", error));
+	};
+
+	const deletItem = (itemDelete) => {
+		var myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		var raw = JSON.stringify(itemDelete);
+
+		var requestOptions = {
+			method: "PUT",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow",
+		};
+
+		fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/cruzdanielyanez",
+			requestOptions
+		)
+			.then((response) =>
+				response.status === 200 ? setTodolist(itemDelete) : ""
+			) // es una condicion una forma de If
+			.catch((error) => console.log("error", error));
+	};
+
 	return (
 		<>
 			<div className="d-flex rounded-3 flex-column w-25 p-5 mx-auto border border-5 mt-3">
@@ -14,7 +77,7 @@ export const Home = () => {
 					Todo-list
 				</div>
 
-				<div class="input-group mb-0 ms-0 d-flex mt-3  justify-content-center  ">
+				<div className="input-group mb-0 ms-0 d-flex mt-3  justify-content-center">
 					<input
 						aria-describedby="button-addon2"
 						className=" input- group mb-0 fs-3 text me-0"
@@ -30,7 +93,7 @@ export const Home = () => {
 						value={taskName}
 						onKeyUp={(e) => {
 							if (taskName !== "" && e.key == "Enter") {
-								setTodolist([...todoList, taskName]);
+								addItem(taskName);
 								setTaskname("");
 							}
 						}}
@@ -41,7 +104,7 @@ export const Home = () => {
 						className=" btn btn-outline-secondary  text-dark"
 						onClick={(e) => {
 							if (taskName !== "") {
-								setTodolist([...todoList, taskName]);
+								addItem(taskName);
 								setTaskname("");
 							}
 						}}>
@@ -55,14 +118,14 @@ export const Home = () => {
 								key={index}
 								className="list-group-item d-flex justify-content-around justify-content-center p-2  bg-light">
 								<p className="align-self-end text-dark fs-3 mb-0">
-									{todo}
+									{todo.label}
 								</p>
 
 								<button
 									type="button"
-									class="btn btn-dark"
+									className="btn btn-dark"
 									onClick={() => {
-										setTodolist(
+										deletItem(
 											todoList.filter(
 												(item, i) => i !== index
 											)
@@ -76,7 +139,7 @@ export const Home = () => {
 				</ul>
 				<div className="bg-warning mt-5 w-25 p-3 rounded-pill bg-opacity-50 justify-content-center d-flex ">
 					{todoList.length}
-					<spam className="ms-3"> Item left</spam>
+					<span className="ms-3"> Item left</span>
 				</div>
 			</div>
 		</>
