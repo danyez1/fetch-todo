@@ -36,7 +36,7 @@ export const Home = () => {
       </button>
 
       <ul className="list-group">
-        {store.list.map((element, index) => {
+        {store.list.slice(1).map((element, index) => {
           return (
             <li
               key={index}
